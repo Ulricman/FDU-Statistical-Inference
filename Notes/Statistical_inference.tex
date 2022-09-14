@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{lipsum}
+\usepackage{framed}
+\usepackage[strict]{changepage}
+\usepackage{newtxtext}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage{tcolorbox}
+\usepackage{color}
+
+
+\title{\textbf{Statistical Inference}}
+\author{}
+\date{}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \newtheorem{Inference}{Theorem}[section]
+
+    % Probability
+    \section{Probability}
+
+
+    \begin{Inference}
+        (\textcolor{red}{\textit{The derivation of the pdf of order statistics by a direct way}})
+        \begin{align}
+            f_{x_{(r)}}(t)=\frac{n!}{(r-1)!(n-r)!}[F_x(t)]^{r-1}f_{x}(t)[1-F_x(t)]^{(n-r)}
+        \end{align}
+    \end{Inference}
+    \begin{proof}
+        By the definition of $F_{x(r)}(t)$, we have
+        \begin{align}
+            F_{x_{(r)}}(t) = \mathbb{P}(x_{(r)}\leq t) & = \sum_{i=r}^n\mathbb{P}(\sum_{j=1}^n I (x_j\leq t) = i)\notag         \\
+                                                       & = \sum_{i=r}^n \binom{n}{i} [F_x(t)]^i[1-F_x(t)]^{n-i}.\label{order_1}
+        \end{align}
+        To get the pdf, we can take derivative of both sides of \eqref{order_1}
+        \begin{align}
+            f_{x_{(r)}}(t) & = \sum_{i=r}^n \binom{n}{i} \left \{ i[F_x(t)]^{i-1}f_x(t)[1-F_x(t)]^{n-i}-(n-i)[F_x(t)]^i[1-F_x(t)]^{n-i-1}f_x(t) \right \}\notag \\
+                           & =\sum_{i=r}^n \binom{n}{i} [F_x(t)]^{i-1}[1-F_x(t)]^{n-i-1}f_x(t)\left \{ i[1-F_x(t)] - (n-i)F_x(t) \right \} \notag               \\
+                           & = \binom{n}{r}r[F_x(t)]^{r-1}[1-F_x(t)]^{n-r} + \sum_{i=r+1}^n \binom{n}{i} i[F_x(t)]^{i-1}[1-F_x(t)]^{n-i} \notag                 \\
+                           & \qquad - \sum_{i=r}^{n-1}\binom{n}{i}(n-i)[F_x(t)]^{i-1}[1-F_x(t)]^{n-i}\notag                                                     \\
+                           & = \binom{n}{r}r[F_x(t)]^{r-1}[1-F_x(t)]^{n-r} + \sum_{i=r}^{n-1} \binom{n}{i+1} {(i+1)}[F_x(t)]^{i}[1-F_x(t)]^{n-i-1} \notag       \\
+                           & \qquad - \sum_{i=r}^{n-1}\binom{n}{i}(n-i)[F_x(t)]^{i-1}[1-F_x(t)]^{n-i}\notag                                                     \\
+                           & = f_{x_{(r)}}(t)=\frac{n!}{(r-1)!(n-r)!}[F_x(t)]^{r-1}f_{x}(t)[1-F_x(t)]^{(n-r)}\notag
+        \end{align}
+    \end{proof}
+
+\end{CJK}
+\end{document}
