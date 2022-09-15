@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{数理统计参考答案}}
+\author{}
+\date{}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+    \maketitle
+
+    % Chapter 2
+    \section{习题2}
+    \begin{itemize}
+        \item [7.] 对于任一 $a<x_{(1)} <\cdots <x_{(n)}<b$，满足该条件的 $(x_1,\cdots, x_n)$ 有 $n!$
+              种，因此有：
+              \begin{align}
+                  \mathop{\int \cdots \int}_{a<x_1 <\cdots <x_n<b} f(x_1) \cdots f(x_n) dx_1\cdots dx_n & =
+                  \frac{1}{n!} \mathop{\int \cdots \int}_{a<x_{(1)} <\cdots <x_{(n)}<b}f(x_{(1)}) \cdots f(x_{(n)}) dx_{(1)}\cdots dx_{(n)} \notag                                                     \\
+                                                                                                        & =\frac{1}{n!}\int_a^bf(x_{(1)})dx_{(1)}\times \cdots \times \int_a^bf(x_{(n)})dx_{(n)}\notag \\
+                                                                                                        & =\frac{1}{n!}[F(b)-F(a)]^n.\notag
+              \end{align}
+    \end{itemize}
+
+\end{CJK}
+\end{document}
