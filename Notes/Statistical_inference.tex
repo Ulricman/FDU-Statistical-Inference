@@ -20,6 +20,8 @@
 \usepackage[dvipsnames,svgnames]{xcolor}
 \usepackage{tcolorbox}
 \usepackage{color}
+\usepackage{cases}
+\usepackage{indentfirst}
 
 
 \title{\textbf{Statistical Inference}}
@@ -35,9 +37,9 @@
     % Probability
     \section{Probability}
 
-
+    % The derivation of the pdf of order statistics in a direct way
     \begin{Inference}
-        (\textcolor{red}{\textit{The derivation of the pdf of order statistics by a direct way}})
+        (\textcolor{red}{\textit{The derivation of the pdf of order statistics in a direct way}})
         \begin{align}
             f_{x_{(r)}}(t)=\frac{n!}{(r-1)!(n-r)!}[F_x(t)]^{r-1}f_{x}(t)[1-F_x(t)]^{(n-r)}
         \end{align}
@@ -58,6 +60,34 @@
                            & \qquad - \sum_{i=r}^{n-1}\binom{n}{i}(n-i)[F_x(t)]^{i-1}[1-F_x(t)]^{n-i}\notag                                                     \\
                            & = f_{x_{(r)}}(t)=\frac{n!}{(r-1)!(n-r)!}[F_x(t)]^{r-1}f_{x}(t)[1-F_x(t)]^{(n-r)}\notag
         \end{align}
+    \end{proof}
+
+    \begin{Inference}
+        (\textcolor{red}{\textit{the pdf of noncentral chi-squared distribution}})
+        \begin{equation}
+            f(x) =
+            \begin{cases}
+                e^{-\delta^2/2}\mathop{\sum}\limits_{i=0}^{\infty} \frac{1}{i!}\left ( \frac{\delta^2}{2} \right )^i \frac{x^{i+n/2-1}}{2^{i+n/2}\Gamma(n/2+i)}e^{-x/2}, & x > 0    \\
+                0,                                                                                                                                                       & x \leq 0
+            \end{cases}
+            \label{noncentral}
+        \end{equation}
+        where $\delta = \sqrt{\mathop{\sum}\limits_{i=1}^n a_i^2}$.
+
+    \end{Inference}
+    \begin{proof}
+        To prove \eqref{noncentral}, we need to use a orthogonal transformation such that
+        $X_1^2+\cdots+X_n^2 = Y_1^2+Z$, where $X_i\sim N(a_i, 1)$, $Y_1\sim N(\delta, 1)$ and
+        $Z\sim \chi_{n-1}^2$. The orthogonal matrix $A$ can be
+        \[
+            \setlength{\arraycolsep}{3pt}
+            \begin{bmatrix}
+                \frac{a_1}{\delta}                      & \frac{a_2}{\delta}                      & \cdots                                   & \frac{a_n}{\delta} \\
+                \frac{a_2}{\sqrt{a_1^2+a_2^2}}          & \frac{-a_1}{a_1^2 + a_2^2}              &                                          &                    \\[7pt]
+                \frac{a_2a_3}{\sqrt{\sum_{i=1}^3a_i^2}} & \frac{a_1a_3}{\sqrt{\sum_{i=1}^3a_i^2}} & \frac{-a_1a_2}{\sqrt{\sum_{i=1}^3a_i^2}} &                    \\[7pt]
+                                                        &                                         &                                          & \ddots             \\
+            \end{bmatrix}.
+        \]
     \end{proof}
 
 \end{CJK}
