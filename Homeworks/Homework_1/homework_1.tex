@@ -1,0 +1,204 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 1}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+
+    \newtheorem{lemma}{Lemma}[]
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Let $X_1,\ldots, X_n \mathop{\sim}\limits^{i.i.d.} U(0,a)$. Find the joint pdf of $R$ and $V$, where
+        $R=X_{(n)}-X_{(1)}$ and $V=\frac{1}{2}(X_{(n)} + X_{(1)})$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    It's easy to know that the joint pdf of $X_{(1)}$ and $X_{(n)}$ is
+    \begin{align}
+        f_{x_{(1)},x_{(n)}}(x,y)=n(n-1)(y-x)^{(n-2)}.\notag
+    \end{align}
+    Since
+    \begin{align}
+        \left | \frac{\partial (R, V)}{\partial (x_{(1)}, x_{(n)})} \right |=
+        \left |
+        \begin{array}{cc}
+            -1          & 1           \\
+            \frac{1}{2} & \frac{1}{2} \\
+        \end{array}
+        \right |
+        = 1,\notag
+    \end{align}
+    we can derive the joint pdf of $R$ and $V$ from the pdf of $X_{(1)}$ and $X_{(n)}$:
+    \begin{align}
+        f_{R,V}(r,v) & =f_{x_{(1)},x_{(n)}}(x(r,v),y(r,v))\left | \frac{\partial (R, V)}{\partial (x_{(1)}, x_{(n)})} \right |^{-1}\notag \\
+                     & =(n-1)nr.\notag
+    \end{align}
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Let $X$ and $Y$ be \textit{i.i.d.} $N(0,1)$ random variables. Define $Z=min(X, Y)$. What
+        distribution does $Z$ follow?
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Since $X$ and $Y$ are independent and identically distributed, we have
+    \begin{align}
+        \mathbb{P}(Z >z) = \mathbb{P}(X>z, Y>z) = \mathbb{P}(X>z)\mathbb{P}(Y>z) = \mathbb{P}(X>z)^2.
+    \end{align}
+    Hence, we can just write
+    \begin{align}
+        \mathbb{P}(Z^2 >t) & = \mathbb{P}(Z>\sqrt{t}) + \mathbb{P}(Z<-\sqrt{t})\notag           \\
+                           & =\mathbb{P}(Z>\sqrt{t}) + 1 - \mathbb{P}(Z\geq-\sqrt{t})\notag     \\
+                           & =\mathbb{P}(X>\sqrt{t})^2 + 1 - \mathbb{P}(X\geq-\sqrt{t})^2\notag \\
+                           & =\mathbb{P}X>\sqrt{t}^2 + 1 - (1-\mathbb{P}(X<-\sqrt{t}))^2\notag  \\
+                           & =2\mathbb{P}(X>\sqrt{t}),
+    \end{align}
+    and get that
+    \begin{align}
+        \mathbb{P}(Z^2\leq t) = 1 - 2\mathbb{P}(X>\sqrt{t}) = \mathbb{P}(-\sqrt{t}<X<\sqrt{t}) = \mathbb{P}(X^2\leq t),
+    \end{align}
+    which means $Z^2 \sim \chi^2(1)$.
+
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        A random right triangle can be constructed in the following manner. Let $X$ be a random
+        angle whose distribution is uniform on $(0, \frac{\pi}{2})$. For each $X$, construct a triangle
+        as pictured below. Here $Y=height\ of\ the\ random\ triangle$. For a fixed constant $d$, find
+        the distribution of $Y$ and $\mathbb{E}(Y)$.
+    \end{shaded}
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[scale=0.2]{triangle.eps}
+        \label{figure}
+    \end{figure}
+    \noindent\textsc{Solution.}\par
+    Through the geometric relationship between $X$ and  $Y$:
+    \begin{align}
+        Y=d\cdot tan(X),\notag
+    \end{align}
+    we can get the pdf of $Y$:
+    \begin{align}
+        f_Y(y) & =f_X(x)\left | \frac{dy}{dx}\right |^{-1} \notag \\
+               & =\frac{2}{\pi} \frac{d}{d^2+y^2},\notag
+    \end{align}
+    which is similar to Cauchy distribution and
+    \begin{align}
+        \mathbb{E}(Y) & = \int_0^{\infty}\frac{2}{\pi}\frac{d\cdot y}{d^2+y^2}dy\notag \\
+                      & = \frac{d}{\pi} ln(d^2+y^2)|_0^{\infty} = \infty.\notag
+    \end{align}
+
+
+    % Problem 4
+
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        $X_1$ and $X_2$ are independent $N(0, \sigma^2)$.
+        \begin{itemize}
+            \item [(a)] Find the joint distribution of $Y_1$ and $Y_2$, where
+                  \begin{align}
+                      Y_1 = X_1^2+X_2^2,\qquad Y_2=\frac{X_1}{\sqrt{Y_1}}.\notag
+                  \end{align}
+            \item [(b)] Show that $Y_1$ and $Y_2$ are independent. Interpret the result geometrically.
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)]
+              Since $X_1$ and $X_2$ are independent, the joint pdf of them is
+              \begin{align}
+                  f_{X_1,X_2}(x_1,x_2) = \frac{1}{2\pi \sigma^2}e^{-\frac{x_1^2 + x_2^2}{2\sigma^2}}.\notag
+              \end{align}
+              Considering that
+              \begin{align}
+                  \{ Y_1=y_1, Y_2 = y_2\} & = \{X_1^2 + X_2 = y_1,\frac{X_1}{\sqrt{y_1}}=y_2\}\notag   \\
+                                          & = \{X_1=x_1, X_2=x_2 \} \cup \{X_1=x_1, X_2=-x_2 \},\notag
+              \end{align}
+              where $x_1 = y_2\sqrt{y_1},\, x_2=\sqrt{y_1(1-y_2^2)}$,
+              we have
+              \begin{align}
+                  f_{Y_1,Y_2}(y_1,y_2) & =\left [ f_{X_1,X_2}(x_1,x_2) + f_{X_1,X_2}(x_1,x_2) \right ] \left | \frac{\partial (Y_1,Y_2)}{\partial (X_1, X_2)}  \right |^{-1}\notag \\
+                                       & = \frac{1}{2\sigma^2}e^{-2\sigma^{-2} y_1}\cdot \frac{1}{\pi \sqrt{1-y_2^2}}.\notag
+              \end{align}
+        \item [(b)]
+              If we denote $Y=Y_1/\sigma$, it's obvious that $Y \sim \chi^2(2)$. So the pdf of $Y$ is
+              \begin{align}
+                  f_{Y}(y) = \frac{1}{2}e^{-y/2}.\notag
+              \end{align}
+              Thus the pdf of $Y_1$ is
+              \begin{align}
+                  f_{Y_1}(y_1) = \frac{1}{2\sigma^2}e^{-2\sigma^{-2} y_1}.\notag
+              \end{align}
+              Therefore, we can write the joint pdf of $Y_1$ and $Y_2$ as
+              \begin{align}
+                  f_{Y_1,Y_2}(y_1,y_2) = f_{Y_1}(y_1)f_{Y_2}(y_2),\notag
+              \end{align}
+              which means $Y_1$ and $Y_2$ are independent.
+              We can Interpret the result geometrically in a Cartesian coordinate system.
+              From a geometric point of view, we can see $(X_1, X_2)$ as the coordinates of a point
+              on a circle, and $Y_1$ denotes the square of the radius, $Y_2$ denotes cosine of the angle
+              between the x-axis and the line connecting this point to the origin.
+              When one of $Y_1$ and $Y_2$ is fixed, the other can still change in its domain.
+    \end{itemize}
+
+
+
+
+    % Problem 5
+    \begin{shaded}
+        \noindent\textsc{Problem 5.}\par
+        Suppose $X_1,\ldots,X_m \mathop{\sim}\limits^{i.i.d.} \chi_n^2$. Find the distribution of $\frac{1}{n}\sum_{i=1}^nX_i $. Hint: use
+        the characteristic function.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Suppose $X\sim Ga(\alpha, \lambda)$, then the characteristic function of $X$ is
+    \begin{align}
+        M_X(t) = \mathbb{E}(e^{itx}) & = \int_0^{\infty} e^{itx}\frac{\lambda^{\alpha}x^{\alpha -1}e^{-\lambda x}}{\Gamma(\alpha)}dx\notag                                                                                                                           \\
+                                     & = \int_0^{\infty} \frac{\left [ \left (1-\frac{it}{\lambda}\right )\lambda\right ]^{\alpha}x^{\alpha -1}e^{-\left (1-\frac{it}{\lambda}\right )\lambda x}}{\left (1-\frac{it}{\lambda}\right )^{\alpha}\Gamma(\alpha)} \notag \\
+                                     & = \left (1-\frac{it}{\lambda}\right )^{-\alpha}. \label{5}
+    \end{align}
+    Since Chi-square distribution is just a special case of Gamma distribution, we can get the characteristic function
+    of chi-square distribution simply by substituting $(\alpha, \lambda)$ with $(\frac{n}{2}, \frac{1}{2})$ in \eqref{5}.
+    Thus, the characteristic function of $X_i$ is
+    \begin{align}
+        M_i(t) = (1-2it)^{\frac{n}{2}}.
+    \end{align}
+    Denote $Y=\sum_{i=1}^n X_i$, then $Y\sim \chi^2_{mn}$, and
+    \begin{align}
+        M_Y(t) = (1-2it)^{\frac{mn}{2}}.
+    \end{align}
+    And by the property of characteristic function, we can calculate that the characteristic function of $Z=\frac{Y}{n}$ is
+    \begin{align}
+        M_Z(t) = M_Y(t/n) = \left (1-\frac{it}{n/2} \right )^{-\frac{mn}{2}},
+    \end{align}
+    which means $Z\sim Ga\left (\frac{mn}{2}, \frac{n}{2}\right )$.
+
+\end{CJK}
+\end{document}
