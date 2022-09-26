@@ -1,0 +1,206 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 2}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+
+    \newtheorem{lemma}{Lemma}[]
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Let $X_1, \ldots, X_n \mathop{\sim}\limits^{i.i.d.} N(\mu, \sigma^2)$, $\bar{X} = \frac{1}{n}\sum_{i=1}^nX_i$,
+        $S_n^2=\frac{1}{n} \sum_{i=1}^n (X_i-\bar{X})^2$. Suppose $X_{n+1}\sim N(\mu, \sigma^2)$ and is independent of
+        $X_1, \ldots, X_n$, find the distribution of
+        \begin{align}
+            \frac{X_{n+1}-\bar{X}}{S_n}\sqrt{\frac{n-1}{n+1}}
+        \end{align}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Since $\bar{X}\sim N(\mu,\frac{\sigma^2}{n})$ and $X_{n+1}\sim N(\mu,\sigma^2)$, we have
+    \begin{align}
+        \frac{X_{n+1}-\bar{X}}{\sqrt{\frac{n+1}{n}}\sigma} \sim N(0,1),\notag
+    \end{align}
+    and
+    \begin{align}
+        \frac{nS_n^2}{\sigma^2}\sim \chi_{n-1}^2.\notag
+    \end{align}
+    Thus, by the definition of $t$-distribution, we can get that
+    \begin{align}
+        \frac{(X_{n+1}-\bar{X})/\sqrt{\frac{n+1}{n}\sigma^2}}{\sqrt{\frac{nS_n^2}{(n-1)\sigma^2}}}
+        = \frac{X_{n+1}-\bar{X}}{S_n}\sqrt{\frac{n-1}{n+1}} \sim t_{n-1}.\notag
+    \end{align}
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Suppose $X_1,\ldots, X_n$ are independent and $X_i\sim N(0,\sigma^2)$ for $i=1,\ldots,n$. Define
+        \begin{align}
+            \xi = \sum_{i=1}^n \frac{(X_i-Z)^2}{\sigma_i^2}
+        \end{align}
+        where
+        \begin{align}
+            Z = \left (\sum_{i=1}^n\frac{X_i}{\sigma_i^2} \right ) \left (\sum_{i=1}^n\frac{1}{\sigma_i^2} \right )^{-1}.
+        \end{align}
+        Find the distribution of $\xi$. (Hint: Use a proper orthogonal transform.)
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Rewrite $\xi$ as
+    \begin{align}
+        \xi = \sum_{i=1}^n \left ( \frac{X_i}{\sigma_i}\right )^2 - \left (\sum_{i=1}^n \frac{1}{\sigma_i^2}\right ) Z^2. \label{xi}
+    \end{align}
+    We can find a matrix $A\in \mathbb{R}^{n\times n}$ in the form as
+    \[
+        \setlength{\arraycolsep}{5.5pt}
+        \begin{bmatrix}
+            \dfrac{1/\sigma_1}{\delta} & \dfrac{1/\sigma_2}{\delta} & \ldots & \dfrac{1/\sigma_n}{\delta} \\[7pt]
+            a_{21}                     & a_{22}                     & \ldots & a_{2n}                     \\[7pt]
+            \vdots                     & \vdots                     & \ddots & \vdots                     \\[7pt]
+            a_{n1}                     & a_{n2}                     & \ldots & a_{nn}
+        \end{bmatrix}
+    \]
+    with rank $n$, where $\delta = \sqrt{\sum_{i=1}^n \frac{1}{\sigma_i^2}}$.
+    Then we can use Schmidt orthogonalization to transform $A$ into an orthogonal matrix (keep the first row of $A$ unchanged).
+    If we regard $X_i/\sigma_i$ as a new random variable $X^{\prime}$ and define $Y:=AX^{\prime}$,
+    with some simple calculation, we have $Y_1=\delta Z$,
+    and
+    \begin{align}
+        Y_i = \sum_{j=1}^n a_{ij} \frac{X_j}{\sigma_j},\, (i=2,\ldots,n).\notag
+    \end{align}
+    It's obvious that $\mathbb{E}(Y_i)=0$, and
+    \begin{align}
+        Var(Y_i) = \sum_{j=1}^n a_{ij}^2 = 1, \, (i=2.\ldots,n).\notag
+    \end{align}
+    Thus we have $Y_i \sim N(0,1)$ for $i=2,\ldots,n$.
+    Plug the results we get into \eqref{xi} and we can get that
+    \begin{align}
+        \xi & = \sum_{i=1}^nY_i^2 - Y_1^2 \notag \\
+            & = \sum_{i=2}^n Y_i^2, \notag
+    \end{align}
+    which means $\xi \sim \chi^2_{n-1}$.
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        Suppose $X_1,\ldots,X_n\sim Poisson(\lambda)$. Show that
+        \begin{align}
+            \frac{\bar{X}-\lambda}{\sqrt{\bar{X}/n}} \mathop{\longrightarrow}\limits^DN(0,1)
+        \end{align}
+        (Hint: Use Slutsky's theorem.)
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    If we define $Y=\sum_{i=1}^n X_i$, then by the property of Poisson distribution,
+    we know that $Y\sim Poisson(n\lambda)$, and $\mathbb{E}(Y)=\mathbb{V}(Y) = n\lambda$.
+    Therefore, according to the CLT, we know that
+    \begin{align}
+        \frac{Y-n\lambda}{\sqrt{n\lambda}} \mathop{\longrightarrow}\limits^D N(0,1).\notag
+    \end{align}
+    Additionally, we have
+    \begin{align}
+        Y\mathop{\longrightarrow}\limits^P n\lambda,\notag
+    \end{align}
+    derived from LLN. And from Slutsky lemma, we know that
+    \begin{align}
+        \frac{\sqrt{n\lambda}}{\sqrt{Y}} \mathop{\longrightarrow}\limits^P 1,\notag
+    \end{align}
+    and
+    \begin{align}
+        \frac{Y-n\lambda}{\sqrt{n\lambda}} \cdot \frac{\sqrt{n\lambda}}{\sqrt{Y}} \mathop{\longrightarrow}\limits^D N(0, 1).\notag
+    \end{align}
+
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        If $X$ is a random variable with pdf or pmf of the form
+        \begin{align}
+            f(x|\boldsymbol{\theta}) = h(x)c(\boldsymbol{\theta})exp\left ( \sum_{i=1}^k w_i(\boldsymbol{\theta})t_i(x)\right )
+        \end{align}
+        show that
+        \begin{itemize}
+            \item [(a)]:
+                  \begin{align}
+                      \mathbb{E}\left (\sum_{i=1}^k \frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(X) \right ) = -\frac{\partial}{\partial \theta_j}log\, c(\boldsymbol{\theta})\label{a}
+                  \end{align}
+            \item [(b)]:
+                  \begin{align}
+                      Var\left (\mathop{\sum}_{i=1}^k \frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j }t_i(X) \right )
+                      = -\frac{\partial^2}{\partial \theta_j^2}log\, c(\boldsymbol{\theta}) - \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldsymbol{\theta})}{\partial \theta_j^2} t_i(X) \right ).\label{b}
+                  \end{align}
+        \end{itemize}
+        Hint:
+        \begin{align}
+            \int f(x|\boldsymbol{\theta}) dx = \int h(x)c(\boldsymbol{\theta})
+            exp\left (\sum_{i=1}^k w_i(\boldsymbol{\theta})t_i(x) \right ) =1.\label{hint}
+        \end{align}
+        Differentiate both sides and then rearrange terms.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)] Differentiate both sides of \eqref{hint} and we can get that
+              \begin{align}
+                  0 & = \int h(x) \left [\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j}
+                      exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right ) +
+                      c(\boldsymbol{\theta})exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right )
+                      \sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(x) \right ] dx = 0.           \label{13}
+              \end{align}
+              Rearrange \eqref{13} and we have
+              \begin{align}
+                  0 & = \frac{1}{c(\boldsymbol{\theta})}\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j} +
+                  \mathbb{E}\left (\sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(X) \right )                                        \notag                                      \\
+                    & = \frac{\partial }{\partial \theta_j}\, log(c(\boldsymbol{\theta})) +  \mathbb{E}\left (\sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(X) \right ), \notag \\
+              \end{align}
+              which is equation \eqref{a}.
+        \item [(b)] Differentiate both sides of \eqref{13}, and we have
+              \begin{align}
+                  0 & = \int h(x) \frac{\partial^2 c(\boldsymbol{\theta})}{\partial \theta_j^2}exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right )dx                                                                            \notag              \\
+                    & \qquad +2 \int h(x) \frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j} exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right )  \sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(x)\, dx  \notag \\
+                    & \qquad + \int h(x) c(\boldsymbol{\theta}) exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right ) \left (\sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(x)\right )^2\, dx                \notag       \\
+                    & \qquad + \int h(x)c(\boldsymbol{\theta}) exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right ) \sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(x)\, dx                        \notag               \\
+                    & =\frac{1}{c(\boldsymbol{\theta})} \frac{\partial^2 c(\boldsymbol{\theta})}{\partial \theta_j^2}
+                  + \frac{2}{c(\boldsymbol{\theta})}\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j} \mathbb{E}\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(X) \right )
+                  + \mathbb{E}\left (\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(X) \right )^2\right )                                                                                                                         \notag                      \\
+                    & \qquad + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                         \notag                       \\
+                    & = \frac{1}{c(\boldsymbol{\theta})} \frac{\partial^2 c(\boldsymbol{\theta})}{\partial \theta_j^2}
+                  - \frac{1}{c^2(\boldsymbol{\theta})} \left (\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j} \right )^2
+                  + Var\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                                          \notag                        \\
+                    & \qquad + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                         \notag                       \\
+                    & = \frac{\partial^2}{\partial \theta_j^2}\, log(c(\boldsymbol{\theta}))
+                  + Var\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )
+                  + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right ).\notag
+              \end{align}
+              Thus, we can get \eqref{b}.
+    \end{itemize}
+
+
+
+\end{CJK}
+\end{document}
