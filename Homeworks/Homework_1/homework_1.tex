@@ -72,10 +72,10 @@
     \end{align}
     Hence, we can just write
     \begin{align}
-        \mathbb{P}(Z^2 >t) & = \mathbb{P}(Z>\sqrt{t}) + \mathbb{P}(Z<-\sqrt{t})\notag           \\
-                           & =\mathbb{P}(Z>\sqrt{t}) + 1 - \mathbb{P}(Z\geq-\sqrt{t})\notag     \\
-                           & =\mathbb{P}(X>\sqrt{t})^2 + 1 - \mathbb{P}(X\geq-\sqrt{t})^2\notag \\
-                           & =\mathbb{P}X>\sqrt{t}^2 + 1 - (1-\mathbb{P}(X<-\sqrt{t}))^2\notag  \\
+        \mathbb{P}(Z^2 >t) & = \mathbb{P}(Z>\sqrt{t}) + \mathbb{P}(Z<-\sqrt{t})\notag            \\
+                           & =\mathbb{P}(Z>\sqrt{t}) + 1 - \mathbb{P}(Z\geq-\sqrt{t})\notag      \\
+                           & =\mathbb{P}(X>\sqrt{t})^2 + 1 - \mathbb{P}(X\geq-\sqrt{t})^2\notag  \\
+                           & =\mathbb{P}(X>\sqrt{t})^2 + 1 - (1-\mathbb{P}(X<-\sqrt{t}))^2\notag \\
                            & =2\mathbb{P}(X>\sqrt{t}),
     \end{align}
     and get that
@@ -145,16 +145,13 @@
               we have
               \begin{align}
                   f_{Y_1,Y_2}(y_1,y_2) & =\left [ f_{X_1,X_2}(x_1,x_2) + f_{X_1,X_2}(x_1,x_2) \right ] \left | \frac{\partial (Y_1,Y_2)}{\partial (X_1, X_2)}  \right |^{-1}\notag \\
-                                       & = \frac{1}{2\sigma^2}e^{-2\sigma^{-2} y_1}\cdot \frac{1}{\pi \sqrt{1-y_2^2}}.\notag
+                                       & = \frac{1}{2\sigma^2}e^{-y_1/ (2\sigma^2) }\cdot \frac{1}{\pi \sqrt{1-y_2^2}}.\notag
               \end{align}
         \item [(b)]
-              If we denote $Y=Y_1/\sigma$, it's obvious that $Y \sim \chi^2(2)$. So the pdf of $Y$ is
+              From the joint pdf of $Y_1$ and $Y_2$, we can know that $Y_1\sim Exp(\frac{1}{2\sigma^2})$, and the
+              marginal pdf of $Y_1$ is
               \begin{align}
-                  f_{Y}(y) = \frac{1}{2}e^{-y/2}.\notag
-              \end{align}
-              Thus the pdf of $Y_1$ is
-              \begin{align}
-                  f_{Y_1}(y_1) = \frac{1}{2\sigma^2}e^{-2\sigma^{-2} y_1}.\notag
+                  f_{Y_1}(y_1) = \frac{1}{2\sigma^2}e^{-y_1/(2\sigma^2)}.\notag
               \end{align}
               Therefore, we can write the joint pdf of $Y_1$ and $Y_2$ as
               \begin{align}
@@ -162,9 +159,9 @@
               \end{align}
               which means $Y_1$ and $Y_2$ are independent.
               We can Interpret the result geometrically in a Cartesian coordinate system.
-              From a geometric point of view, we can see $(X_1, X_2)$ as the coordinates of a point
+              From a geometric point of view, we can regard $(X_1, X_2)$ as the coordinates of a point
               on a circle, and $Y_1$ denotes the square of the radius, $Y_2$ denotes cosine of the angle
-              between the x-axis and the line connecting this point to the origin.
+              between the $x$-axis and the line connecting this point to the origin.
               When one of $Y_1$ and $Y_2$ is fixed, the other can still change in its domain.
     \end{itemize}
 
