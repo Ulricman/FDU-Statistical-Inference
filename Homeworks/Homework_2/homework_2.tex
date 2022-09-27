@@ -86,7 +86,7 @@
             a_{n1}                     & a_{n2}                     & \ldots & a_{nn}
         \end{bmatrix}
     \]
-    with rank $n$, where $\delta = \sqrt{\sum_{i=1}^n \frac{1}{\sigma_i^2}}$.
+    with rank $n$, where $\delta = \sqrt{\sum_{i=1}^n \sigma_i^{-2}}$.
     Then we can use Schmidt orthogonalization to transform $A$ into an orthogonal matrix (keep the first row of $A$ unchanged).
     If we regard $X_i/\sigma_i$ as a new random variable $X^{\prime}$ and define $Y:=AX^{\prime}$,
     with some simple calculation, we have $Y_1=\delta Z$,
@@ -96,7 +96,7 @@
     \end{align}
     It's obvious that $\mathbb{E}(Y_i)=0$, and
     \begin{align}
-        Var(Y_i) = \sum_{j=1}^n a_{ij}^2 = 1, \, (i=2.\ldots,n).\notag
+        \mathbb{V}(Y_i) = \sum_{j=1}^n a_{ij}^2 = 1, \, (i=2.\ldots,n).\notag
     \end{align}
     Thus we have $Y_i \sim N(0,1)$ for $i=2,\ldots,n$.
     Plug the results we get into \eqref{xi} and we can get that
@@ -127,13 +127,13 @@
     \begin{align}
         Y\mathop{\longrightarrow}\limits^P n\lambda,\notag
     \end{align}
-    derived from LLN. And from Slutsky lemma, we know that
+    derived from LLN. And from Slutsky theorem, we know that
     \begin{align}
         \frac{\sqrt{n\lambda}}{\sqrt{Y}} \mathop{\longrightarrow}\limits^P 1,\notag
     \end{align}
     and
     \begin{align}
-        \frac{Y-n\lambda}{\sqrt{n\lambda}} \cdot \frac{\sqrt{n\lambda}}{\sqrt{Y}} \mathop{\longrightarrow}\limits^D N(0, 1).\notag
+        \frac{Y-n\lambda}{\sqrt{n\lambda}} \cdot \frac{\sqrt{n\lambda}}{\sqrt{Y}} =\frac{\bar{X}-\lambda}{\sqrt{\bar{X}/n}}  \mathop{\longrightarrow}\limits^D N(0, 1).\notag
     \end{align}
 
 
@@ -152,7 +152,7 @@
                   \end{align}
             \item [(b)]:
                   \begin{align}
-                      Var\left (\mathop{\sum}_{i=1}^k \frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j }t_i(X) \right )
+                      \mathbb{V}\left (\mathop{\sum}_{i=1}^k \frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j }t_i(X) \right )
                       = -\frac{\partial^2}{\partial \theta_j^2}log\, c(\boldsymbol{\theta}) - \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldsymbol{\theta})}{\partial \theta_j^2} t_i(X) \right ).\label{b}
                   \end{align}
         \end{itemize}
@@ -170,7 +170,7 @@
                   0 & = \int h(x) \left [\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j}
                       exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right ) +
                       c(\boldsymbol{\theta})exp\left (\sum_{i=1}^kw_i(\boldsymbol{\theta})t_i(x) \right )
-                      \sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(x) \right ] dx = 0.           \label{13}
+                      \sum_{i=1}^k\frac{\partial w_i(\boldsymbol{\theta})}{\partial \theta_j}t_i(x) \right ] dx.           \label{13}
               \end{align}
               Rearrange \eqref{13} and we have
               \begin{align}
@@ -191,10 +191,10 @@
                     & \qquad + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                         \notag                       \\
                     & = \frac{1}{c(\boldsymbol{\theta})} \frac{\partial^2 c(\boldsymbol{\theta})}{\partial \theta_j^2}
                   - \frac{1}{c^2(\boldsymbol{\theta})} \left (\frac{\partial c(\boldsymbol{\theta})}{\partial \theta_j} \right )^2
-                  + Var\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                                          \notag                        \\
+                  + \mathbb{V}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                                          \notag                 \\
                     & \qquad + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )                                                                                         \notag                       \\
                     & = \frac{\partial^2}{\partial \theta_j^2}\, log(c(\boldsymbol{\theta}))
-                  + Var\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )
+                  + \mathbb{V}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right )
                   + \mathbb{E}\left (\sum_{i=1}^k \frac{\partial^2 w_i(\boldmath\theta)}{\partial \theta_j^2} t_i(X) \right ).\notag
               \end{align}
               Thus, we can get \eqref{b}.
