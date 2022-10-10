@@ -1,0 +1,154 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 3}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \def \RR{{\mathbb R}}
+    \def \EE{{\mathbb E}}
+    \def \VV{{\mathbb V}}
+    \def \II{{\mathbb I}}
+
+    \newtheorem{lemma}{Lemma}[]
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Let $X_1,\ldots, X_n$ be independent random variables with densities
+        \begin{align}
+            f_{X_i}(x|\theta) = e^{i\theta - x} \II(x\geq i\theta).
+        \end{align}
+        Prove that $T=\mathop{min}\limits_{i}(X_i/i)$ is a sufficient statistics for $\theta$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    The joint pdf of the samples $X$ is
+    \begin{align}
+        f_X(\mathbf{x}|\theta) & = \prod_{i=1}^n e^{i\theta - x_i} \II(x_i\geq i\theta) \notag                                      \\
+                               & = exp \left ({\frac{n(n+1)}{2}\theta - \sum_{i=1}^n x_i} \right ) \II (T(\mathbf{x}) \geq 0)\notag \\
+                               & = g(T(\mathbf{x})|\theta) h(\mathbf{x}),\notag
+    \end{align}
+    where
+    \begin{align}
+        g(T(\mathbf{x})|\theta) & = e^{{\frac{n(n+1)}{2}\theta}}\II (T(\mathbf{x}) \geq 0),\notag \\
+        h(\mathbf{x})           & = exp^{- \sum_{i=1}^n x_i}.\notag
+    \end{align}
+    Here, we use the fact that $i>0$ and $x_i\theta \geq i\theta$ (for $1\leq i \leq n$) if and only if $\mathop{min}_i (x_i/i) \geq \theta$.
+    Thus, by the factorization theorem, we have $T(X)=\mathop{min}_i (X_i/i)$ is a sufficient statistics.
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Suppose $X_1,\ldots,X_n \mathop{\sim}\limits^{iid}N(\mu, \sigma^2)$, show that $\bar{X}$
+        and $X_{(n)} - X_{(1)}$ are independent.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    First consider $\sigma^2$ fixed and let $\mu$ vary, $-\infty < \mu < \infty$. It's obvious that
+    $\bar{X}$ is a sufficient statistics for $\mu$.
+    Since the pdf of $\bar{X}$ is ($\sigma$ is known)
+    \begin{align}
+        f_{\bar{X}}(\bar{x}) & = \sqrt{\frac{n}{2\pi}} \frac{1}{\sigma} e^{-\frac{n(\bar{x} - \mu)^2}{2\sigma^2}} \notag                                                                  \\
+                             & =\sqrt{\frac{n}{2\pi}} e^{-\frac{n\bar{x}^2}{2\sigma^2}} \cdot\frac{1}{\sigma} e^{-\frac{n\mu^2}{2\sigma^2}} \cdot e^{\frac{n\mu}{\sigma^2}\bar{x}},\notag
+    \end{align}
+    which has an open set in $\RR$,
+    we can know that $\bar{x}$ is complete.
+    Thus, $\bar{X}$ is a complete and sufficient statistics for $\mu$.
+    Since $X_{(n)} - X_{(1)}$ is an ancillary statistics for $\mu$ when $\sigma$ is known, by the Basu's theorem, we know
+    that $\bar{X}$ and $X_{(n)} - X_{(1)}$ are independent.
+    But since $\sigma$  is arbitrary, we have that $\bar{X}$ and $X_{(n)} - X_{(1)}$ are independent for
+    any choice of $\mu$ and $\sigma$.
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        Let $X_1,\ldots,X_n$ be a random sample from a population with location pdf $f(x-\theta)$.
+        Show that the order statistics, $T(X_1,\ldots,X_n) = (X_{(1)},\ldots,X_{(n)})$, are a sufficient
+        Statistics for $\theta$ and no further reduction is possible.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    The pdf of $X$ is
+    \begin{align}
+        f(\mathbf{x}|\theta) & = \prod_{i=1}^n f(x_i|\theta) \notag     \\
+                             & = \prod_{i=1}^n f(x_{(i)}|\theta),\notag
+    \end{align}
+    which shows that $T(X)=(X_{(1)},\ldots, X_{(n)})$ is a sufficient statistics.
+    Consider two samples $X_1,\ldots, X_n$ and $Y_1,\ldots,Y_n$, then the ratio is
+    \begin{align}
+        \frac{f(\mathbf{x}|\theta)}{f(\mathbf{y}|\theta)} & = \frac{\prod_{i=1}^n f(x_i|\theta)}{\prod_{j=1}^n f(y_j|\theta)} \notag \\
+                                                          & = \prod_{i=1}^n \frac{f(x_{(i)}|\theta)}{f(y_{(i)}|\theta)}. \notag
+    \end{align}
+    It's obvious that the ratio is a constant function of $\theta$ is and only if $T(X)=T(Y)$. Thus, $T(X)$
+    is a minimal sufficient for $\theta$, which means no further reduction is possible without further restrictions on $f$.
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        Suppose $X$ follows a discrete distribution with the following pmf:
+        \begin{align}
+            P(X=0) = p,\qquad P(X=1)=3p,\qquad P(X=2) =  1-4p,\qquad 0<p<1/4.\notag
+        \end{align}
+        Is the family of distribution of $X$ complete? What about the following family:
+        \begin{align}
+            P(X=0)=p,\qquad P(X=1)=p^2,\qquad P(X=2)=1-p-p^2,\qquad 0<p<1/2.\notag
+        \end{align}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Let $g$ be a function such that $\EE_p g(X)=0$.
+    Then
+    \begin{align}
+        0 = \EE_p g(X) & = pg(0) + 3pg(1) + (1-4p) g(2) \notag  \\
+                       & = (g(0) + 3g(1) - 4g(2)) + g(2),\notag
+    \end{align}
+    for all $0< p < 1/4$.
+    Thus, we have
+    \begin{align}
+        g(2) = 0\notag \\
+        g(0) + 3g(1) - 4g(2) = 0,\notag
+    \end{align}
+    which implies that $g(X)$ need to statistics that $g(2)=0$ and $g(0) + 3g(1) = 0$.
+    Thus, $g(X)$ don't have to be identically zero,and this family of distribution of $X$ is not complete.
+
+    For the second distribution, we have
+    \begin{align}
+        0 = \EE_pg(X) & = pg(0) + p^2 g(1) + (1-p-p^2) g(2) \notag         \\
+                      & = (g(1)-g(2)) p^2 + (g(0) - g(2)) p + g(2), \notag
+    \end{align}
+    for all $0< p < 1/2$.
+    This is a polynomial of degree 2 in in $p$. To make it zero for all $p$, each coefficient must be zero.
+    Thus,
+    \begin{align}
+        g(0) = g(1) = g(2) =0,\notag
+    \end{align}
+    or in other words,
+    \begin{align}
+        P_p(g(X)=0)=1.\notag
+    \end{align}
+    Thus, we have this family  of distribution is complete.
+\end{CJK}
+\end{document}
