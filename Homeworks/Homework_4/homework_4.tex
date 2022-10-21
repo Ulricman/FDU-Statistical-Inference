@@ -101,10 +101,18 @@
               which belongs to the exponential family and $n\geq 1$.
               Therefore,
               \begin{align}
-                  T(\mathbf{X}) & = \sum_{i=1}^n \textnormal{ln}(X_i),
+                  T(\mathbf{X}) & = \sum_{i=1}^n \textnormal{ln}(X_i),\notag
               \end{align}
               is a sufficient statistics for $\theta$.
-              Since $\sum_{i=1}^n X_i$ can not be written as a function of $T(\mathbf{X})$, it's not a sufficient statistics.
+              Now we prove that $T(\mathbf{X})$ is also the minimal sufficient statistics.
+              Since
+              \begin{align}
+                  \frac{f(\mathbf{X}|\theta)}{f(\mathbf{Y}|\theta)} & = \left ( \frac{\prod_{i=1}^n x_i}{\prod_{j=1}^n y_j} \right )^{\theta - 1}\notag \\
+                                                                    & =e^{(\theta - 1)(T(\mathbf{X}) - T(\mathbf{Y}))}\notag
+              \end{align}
+              is a constant function of $\theta$ if and only if $T(\mathbf{X})=T(\mathbf{Y})$, $T(\mathbf{X})$ is the minimal sufficient statistics for $\theta$.
+
+              However, $T(\mathbf{X}) = T(\mathbf{Y})$ does not implies that $\sum_{i=1} x_i = \sum_{j=1}^n y_j$, which means $\sum_{i=1}^n x_i$ is not sufficient.
         \item [(b)] Since the natural parameter space $\Theta = (0, \infty)$ contains an open set,
               $T(\mathbf{X})$ is also a complete statistics for $\theta$.
     \end{itemize}
