@@ -1,0 +1,158 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 4}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \def \RR{{\mathbb R}}
+    \def \EE{{\mathbb E}}
+    \def \VV{{\mathbb V}}
+    \def \II{{\mathbb I}}
+    \def \NN{{\mathcal N}}
+
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Let $X_1,\ldots, X_n \mathop{\sim}\limits^{iid} \NN (\theta, a \theta^2)$, where $a$ is
+        a known positive constant and $\theta > 0$.
+        \begin{itemize}
+            \item [(a)] Show that the parameter space does not contain a two-dimensional open set.
+            \item [(b)] Show that the statistics $T = (\bar{X}, S^2)$ is a sufficient statistics for $\theta$,
+                  but the family of distributions is not complete.
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)] The parameter space $\Theta = \{(\theta, a\theta^2): \theta > 0, a >0  \} $ is a parabola in a two-dimensional space,
+              which does not contains a two-dimensional open set.
+        \item [(b)] The pdf of the sample is
+              \begin{align}
+                  f(\mathbf{X}, \theta) & = (2a\pi \theta^2) ^{-n/2} \textnormal{exp} \left (-\frac{nS^2 + n(\bar{x} - \theta)^2}{2a\theta^2}  \right ).\notag
+              \end{align}
+              Hence, by the factorization theorem, $T = (\bar{X}, S^2)$ is a sufficient statistics for $\theta$.
+
+              To prove that the family is not complete, we just need to find a function $g(\bar{X}, S^2)$ satisfies
+              $\EE(g(\bar{X}, S^2)) = 0$, but $g(\bar{X}, S^2)$ don't have to be zero identically.
+              We have already known that $\frac{nS^2}{a\theta^2} \sim \chi_{n-1}^2$. If we define $Y = \frac{nS^2}{a\theta^2}$,
+              then we have
+              \begin{align}
+                  \EE(\sqrt{Y}) & = \int_{0}^{\infty} y^{\frac{1}{2}} \, \frac{y^{\frac{n-1}{2}-1}e^{-\frac{y}{2}}}{2^{\frac{n-1}{2}}\Gamma(\frac{n-1}{2})}\, dx \notag \\
+                                & =\frac{\sqrt{2} \Gamma(\frac{n}{2})}{\Gamma(\frac{n-1}{2})}.\notag
+              \end{align}
+              Hence,
+              \begin{align}
+                  \EE(S) & = \sqrt{\frac{a}{n}}\theta \EE(\sqrt{Y}) = \sqrt{\frac{2a}{n}}\frac{\Gamma(\frac{n}{2})\theta }{\Gamma(\frac{n-1}{2})}.\notag
+              \end{align}
+              Therefore, if we define
+              \begin{align}
+                  g(\bar{X}, S^2) & = \bar{X} - \sqrt{\frac{n}{2a}} \frac{\Gamma(\frac{n-1}{2})}{\Gamma(\frac{n}{2})}S ,\notag
+              \end{align}
+              then we have $\EE(g(\bar{X}, S^2)) = 0$, but $g(\bar{X}, S^2)$ doesn't have to be zero identically, which
+              means this family of distribution is not complete.
+    \end{itemize}
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Let $X_1,\ldots, X_n$ be a random sample from the following population:
+        \begin{align}
+            f(x,\theta) = \theta x^{\theta - 1}, \qquad 0 < x < 1, \qquad \theta > 0.
+        \end{align}
+        \begin{itemize}
+            \item [(a)] Is $\sum_{i=1}^n X_i$ sufficient for $\theta$?
+            \item [(b)] Find a complete sufficient statistics for $\theta$.
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)]
+              The pdf of the sample is
+              \begin{align}
+                  f(\mathbf{X}|\theta) & = \prod_{i=1}^n \theta x_i^{\theta - 1} \notag                                                                                                       \\
+                                       & = \theta^n\cdot \textnormal{exp}\left (\theta \left (\sum_{i=1}^n \textnormal{ln}(x_i)\right )\right ) \left (\prod_{i=1}^n x_i\right )^{-1} ,\notag
+              \end{align}
+              which belongs to the exponential family and $n\geq 1$.
+              Therefore,
+              \begin{align}
+                  T(\mathbf{X}) & = \sum_{i=1}^n \textnormal{ln}(X_i),
+              \end{align}
+              is a sufficient statistics for $\theta$.
+              Since $\sum_{i=1}^n X_i$ can not be written as a function of $T(\mathbf{X})$, it's not a sufficient statistics.
+        \item [(b)] Since the natural parameter space $\Theta = (0, \infty)$ contains an open set,
+              $T(\mathbf{X})$ is also a complete statistics for $\theta$.
+    \end{itemize}
+
+
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        Suppose $X_1,\ldots, X_n$ are independently sampled from the following pmf
+        \begin{align}
+            P(X=k)= - \frac{1}{\textnormal{ln}(1-p)} \frac{p^k}{k}, \qquad 0 < p < 1, k=1, 2,\ldots
+        \end{align}
+        Use the method of moment to find an estimator for $p$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Since
+    \begin{align}
+        \EE(X)   & = \sum_{i=1}^{\infty} -\frac{p^k}{\textnormal{ln}(1-p)} = -\frac{1}{\textnormal{ln}(1-p)} \frac{p}{1-p} , \notag    \\
+        \EE(X^2) & = \sum_{i=1}^{\infty} -\frac{kp^k}{\textnormal{ln}(1-p)} = -\frac{1}{\textnormal{ln}(1-p)} \frac{p}{(1-p)^2},\notag
+    \end{align}
+    we have
+    \begin{align}
+        p = 1 - \frac{\EE(X)}{\EE(X^2)}.\notag
+    \end{align}
+    Thus, by the method of moment, we have
+    \begin{align}
+        \hat{p} & = 1 - \frac{m_1}{m_2},\notag
+    \end{align}
+    where
+    \begin{align}
+        m_1 = \frac{\sum_{i=1}^n X_i}{n}, \qquad m_2 = \frac{\sum_{i=1}^n X_i^2}{n}.\notag
+    \end{align}
+
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        Suppose $X_1,\ldots, X_n \mathop{\sim}\limits^{iid} \NN(\mu, \sigma^2)$. Find a method of moment
+        estimator for $P(X>1)$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Let $Y=\frac{X-\mu}{\sigma}$, then $P(X>1) = P(Y>\frac{1-\mu}{\sigma})= 1-\Phi\left (\frac{1-\mu}{\sigma}\right )$, where $\Phi(x)$ is the cdf of the standard normal distribution.
+    By the method of moment, we have $\hat{\mu} = \bar{X}$ and $\hat{\sigma}^2 = S^2 = \sum_{i=1}^n (X_i - \bar{X})^2/n$.
+    Therefore, a method of moment estimator of $P(X>1)$ is
+    \begin{align}
+        1 - \Phi\left (\frac{1-\bar{X}}{S}\right ).\notag
+    \end{align}
+\end{CJK}
+\end{document}
