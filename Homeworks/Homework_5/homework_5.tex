@@ -1,0 +1,156 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 5}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \def \RR{{\mathbb R}}
+    \def \EE{{\mathbb E}}
+    \def \VV{{\mathbb V}}
+    \def \II{{\mathbb I}}
+
+    \newtheorem{lemma}{Lemma}[]
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Let $W$ be a statistics, show that $\EE_{\theta}(W-\theta)^2 = \VV_{\theta}(W) + (\EE_{\theta}(W)- \theta)^2$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{align}
+        \EE_{\theta} (W - \theta)^2 & = \EE_{\theta}(W - \EE_{\theta}(W) + \EE_{\theta}(W) - \theta)^2 \notag                                                  \\
+                                    & = \VV_{\theta}(W) + 2 \EE_{\theta} (W-\EE_{\theta}(W)) (\EE_{\theta}(W) - \theta) + (\EE_{\theta}(W)- \theta)^2 \notag   \\
+                                    & = \VV_{\theta}(W) + 2  (\EE_{\theta}(W)-\EE_{\theta}(W)) (\EE_{\theta}(W) - \theta) + (\EE_{\theta}(W)- \theta)^2 \notag \\
+                                    & =  \VV_{\theta}(W) + (\EE_{\theta}(W)- \theta)^2.\notag
+    \end{align}
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        $X_1, \ldots, X_n \mathop{\sim}\limits^{iid} f(x|\mu)$ where
+        \begin{align}
+            f(x|\mu) = e^{-(x-\mu)} \cdot \II(x\geq\mu), \qquad \mu \in (-\infty, \infty).
+        \end{align}
+        \begin{itemize}
+            \item [(a)] Find $\hat{\mu}_{mle}$.
+            \item [(b)] Use method of moments to find an unbiased estimator for $\mu$.
+            \item [(c)] Compare the estimators from (a) and (b), which one has a smaller MSE?
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)]
+              The likelihood function is
+              \begin{align}
+                  L(\mu) & = \prod_{i=1}^n e^{-(x-\mu)} \cdot \II(x\geq\mu) \notag   \\
+                         & = e^{-n(\bar{x} - \mu)} \cdot \II(x_{(1)}\geq \mu).\notag
+              \end{align}
+              Since $e^{-(\bar{x} - \mu)}$ is monotonically increasing of $\mu$, and $\mu \leq x_{(1)}$,
+              we can conclude that the MLE of $\mu$ is $x_{(1)}$.
+        \item [(b)] We can denote $Y = X-\mu$ so that $Y\sim Exp(1)$.
+              Since $\EE(Y) = 1$ and $\VV(Y) = 1$, we have $\EE(X) = \mu + 1$ and $\VV(X) = 1$.
+              Therefore, by the method of moments, we can use $\bar{X} - 1$ to estimate $\mu$.
+        \item [(c)]
+              Let's compute the MSE of $\mu_{mle}=x_{(1)}$ first.
+              The pdf of $x_{(1)}$ is
+              \begin{align}
+                  f_{x_{(1)}}(x) & = n e^{-(x-\mu)} \left (e^{-(x-\mu)} \right )^{n-1} \notag \\
+                                 & = n e^{-n(x - \mu)}.\notag
+              \end{align}
+              If we denote $Y=X_{(1)}-\mu$, then $Y\sim Exp(n)$. Hence,
+              \begin{align}
+                  \EE(X_{(1)}) & = \EE(Y) + \mu = \frac{1}{n} + \mu, \notag \\
+                  \VV(X_{(1)}) & = \VV(Y) = \frac{1}{n^2}.\notag
+              \end{align}
+              Therefore, the MSE of $x_{(1)}$ is $2/n^2$.
+
+              Since
+              \begin{align}
+                  \EE(\bar{X} - 1) & = \mu + 1 - 1 = \mu,\notag
+              \end{align}
+              $\bar{X} - 1$ is an unbiased estimator of $\mu$.
+              And its variance is
+              \begin{align}
+                  \VV(\bar{X} - 1) & = \VV(\bar{X}) = \frac{\VV(X)}{n} =\frac{1}{n}.\notag
+              \end{align}
+              Therefore, $x_{(1)}$ has a smaller MSE when $n>2$.
+    \end{itemize}
+
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        Let $F(x)$ and $f(x)$ be the distribution and density functions for iid random variables $X_1, \ldots, X_n$.
+        Show that
+        \begin{align}
+            \mathop{\int \cdots \int}\limits_{a<x_1< \cdots< x_n <b} f(x_1) \cdots f(x_n)\, dx_1 \cdots dx_n = \frac{1}{n!} [F(b) - F(a)]^n.
+        \end{align}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    For each value of $\boldsymbol{a} = (a_1, \ldots, a_n)$, there exists $n!$ permutations of $X_1, \ldots, X_n$ such that $X_{(1)} = a_1, \ldots, X_{(n)} = a_n$.
+    Hence, we have
+    \begin{align}
+        \mathop{\int \cdots \int}_{a<x_1 <\cdots <x_n<b} f(x_1) \cdots f(x_n) dx_1\cdots dx_n & =
+        \frac{1}{n!} \mathop{\int \cdots \int}_{a<x_{(1)} <\cdots <x_{(n)}<b}f(x_{(1)}) \cdots f(x_{(n)}) dx_{(1)}\cdots dx_{(n)} \notag                                                     \\
+                                                                                              & =\frac{1}{n!}\int_a^bf(x_{(1)})dx_{(1)}\times \cdots \times \int_a^bf(x_{(n)})dx_{(n)}\notag \\
+                                                                                              & =\frac{1}{n!}[F(b)-F(a)]^n.\notag
+    \end{align}
+
+
+
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        If $f(x|\theta)$ satisfies
+        \begin{align}
+            \frac{d}{d\theta}\EE_{\theta} \left (\frac{\partial }{\partial \theta} log f(X|\theta) \right ) = \int \frac{\partial }{\partial \theta} \left [\left (\frac{\partial }{\partial \theta} log f(x|\theta) \right ) f(x|\theta) \right ]\, dx
+        \end{align}
+        (true for an exponential family), show that
+        \begin{align}
+            \EE_{\theta} \left [\left ( \frac{\partial }{\partial \theta} log f(X|\theta) \right )^2  \right ] = - \EE_{\theta} \left (\frac{\partial^2 }{\partial \theta^2} log f(X|\theta) \right ).\label{4p}
+        \end{align}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    We have already known that
+    \begin{align}
+        \EE_{\theta} \left [\frac{\partial}{\partial \theta} \textnormal{ln} f(\mathbf{X|\theta}) \right ] = 0.\label{4}
+    \end{align}
+    Differentiate both sides of \eqref{4}:
+    \begin{align}
+        0 & = \int_{\mathcal{X}} \left [\frac{\partial^2}{\partial \theta^2} \textnormal{ln} f(x|\theta) \right ] f(x|\theta) + \left [ \frac{\partial}{\partial \theta}\textnormal{ln} f(x|\theta)\right ]\frac{\partial}{\partial \theta} f(x|\theta)\, dx \notag \\
+          & = \int_{\mathcal{X}} \left [\frac{\partial^2}{\partial \theta^2} \textnormal{ln} f(x|\theta) \right ] f(x|\theta) + \left [ \frac{\partial}{\partial \theta}\textnormal{ln} f(x|\theta)\right ]^2 f(x|\theta) \, dx \notag                              \\
+          & = \EE_{\theta} \left [\left ( \frac{\partial }{\partial \theta} log f(X|\theta) \right )^2  \right ] + \EE_{\theta} \left (\frac{\partial^2 }{\partial \theta^2} log f(X|\theta) \right ),\notag
+    \end{align}
+    which is just \eqref{4p}.
+
+
+\end{CJK}
+\end{document}
