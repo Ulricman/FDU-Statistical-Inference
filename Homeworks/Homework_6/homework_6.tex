@@ -141,14 +141,14 @@
     \end{shaded}
     \noindent\textsc{Solution.}\par
     Define $\phi(X)=\II(X_1=1, X_2=0)$, then we have $\EE(\phi(X))=p(1-p)$, which means $\phi(X)$ is an unbiased
-    estimator of $p(1-p)$. Note that $T=\sum_{I=1}^n X_i$ is a complete sufficient statistics. Therefore, $g(T) = \EE(\phi(X)|T)$
+    estimator of $p(1-p)$. Note that $T=\sum_{i=1}^n X_i$ is a complete sufficient statistics. Therefore, $g(T) = \EE(\phi(X)|T)$
     is also an unbiased estimator of $p(1-p)$, and by Lehmann-Scheff theorem, is the unique best unbiased estimator.
     And
     \begin{align}
         g(t) & =P(X_1=1, X_2=0 | T=t) \notag                                                                  \\
-             & = \frac{P(X_1=1, X_2=0, \sum_{i=3}^n X_i = t-2)}{P(\sum_{i=1}^n X_i = t)} \notag               \\
+             & = \frac{P(X_1=1, X_2=0, \sum_{i=3}^n X_i = t-1)}{P(\sum_{i=1}^n X_i = t)} \notag               \\
              & = \frac{p(1-p) \cdot \binom{n-2}{t-1}p^{t-1}(1-p)^{n-t-1}}{\binom{n}{t}p^{t}(1-p)^{n-t}}\notag \\
-             & =\frac{\binom{n-2}{t-1}}{\binom{n}{t}}.\notag
+             & = \frac{t(n-t)}{(n-1)n}.\notag
     \end{align}
 
 
