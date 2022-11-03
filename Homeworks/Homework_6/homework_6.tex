@@ -1,0 +1,178 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 6}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \def \RR{{\mathbb R}}
+    \def \EE{{\mathbb E}}
+    \def \VV{{\mathbb V}}
+    \def \II{{\mathbb I}}
+
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Suppose $X_1, \cdots, X_n \mathop{\sim}\limits^{iid} B(p)$.
+        \begin{itemize}
+            \item [(a)] Show that the variance of the MLE of $p$ attains the Cramer-Rao lower bound.
+            \item [(b)] For $n\geq 4$, show that the product $X_1X_2X_3X_4$ is an unbiased estimator of
+                  $p^4$, and use this fact to find the best unbiased estimator of $p^4$.
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)] It's easy to compute that the MLE of $p$ is $\hat{p} = \sum_{i=1}^n X_i /n$ which is unbiased, and
+              \begin{align}
+                  \VV(\hat{p}) = \frac{p(1-p)}{n}.\notag
+              \end{align}
+              The fisher information of the Bernoulli distribution is
+              \begin{align}
+                  I(p) & = - \EE \left (\frac{\partial^2 }{\partial p^2} log (p^x(1-p)^{1-x}) \right ) \notag \\
+                       & = \EE \left (\frac{x}{p^2} + \frac{1 -x}{(1-p)^2} \right )\notag                     \\
+                       & = \frac{1}{p(1-p)}.\notag
+              \end{align}
+              Therefore, the C-R lower bound is
+              \begin{align}
+                  \frac{1}{n I(p)} = \frac{p(1-p)}{n},\notag
+              \end{align}
+              which is equal to the variance of $\hat{p}$.
+        \item [(b)] Since $X_1, X_2, X_3$ and $X_4$ are independent and identically distributed,
+              \begin{align}
+                  \EE(X_1X_2X_3X_4) = \prod_{i=1}^4 \EE(X_i) = p^4.\notag
+              \end{align}
+              Thus, $X_1X_2X_3X_4$ is an unbiased estimator of $p^4$.
+
+              \noindent We have already known that
+              $T=\sum_{i=1}^n X_i \sim B(n, p)$ is a complete sufficient statistics. Therefore,
+              \begin{align}
+                  \phi(T) & = \EE \left (X_1X_2X_3X_4 | T \right )\notag
+              \end{align}
+              is the best unbiased estimator of $p^4$.
+              Here,
+              \begin{align}
+                  \phi(t) & = \EE \left (X_1X_2X_3X_4 | T=t \right ) \notag                                            \\
+                          & = P (X_1X_2X_3X_4 |T=t) \notag                                                             \\
+                          & = \frac{P(X_1=X_2=X_3=X_4 =1, \sum_{i=5}^n X_i = t - 4)}{P(T=t)}\notag                     \\
+                          & = \frac{p^4 \cdot \binom{n-4}{t-4} p^{t-4} (1-p)^{n-t}}{\binom{n}{t}p^t(1-p)^{n-t}} \notag \\
+                          & = \frac{\binom{n-4}{t-4}}{\binom{n}{t}}\label{1}
+              \end{align}
+              when $n \geq 5$. When $n=4$, $\EE \left (X_1X_2X_3X_4 | T \right ) = 1$ and \eqref{1} also equals to zero.
+              Hence, the best unbiased estimator of $p^4$ is
+              \begin{align}
+                  \phi(T) = \frac{\binom{n-4}{T-4}}{\binom{n}{T}},\notag
+              \end{align}
+              where $T=\sum_{i=1}^n X_i$.
+    \end{itemize}
+
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Let $X_1, \cdots, X_n \mathop{\sim}\limits^{iid} P(\lambda)$, and let $\bar{X}$ and $S^2$ denote the sample mean and
+        variance respectively.
+        \begin{itemize}
+            \item [(a)] Prove that $\bar{X}$ is the best unbiased estimator of $\lambda$ without using the Cramer-Rao theorem.
+            \item [(b)] Prove that $\EE(S^2|\bar{X}) = \bar{X}$ and use it to show that $\VV(S^2) > \VV(\bar{X})$.
+        \end{itemize}
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    \begin{itemize}
+        \item [(a)] We can write the joint pmf of the samples as
+              \begin{align}
+                  f(X|\lambda) & = \prod_{i=1}^n e^{-\lambda} \frac{\lambda^{x_i}}{x_i!} \notag              \\
+                               & =  \frac{e^{-n\lambda}}{\prod_{i=1}^n x_i!} e^{log(\lambda) \sum X_i}\notag \\
+                               & =  \frac{e^{-ne^{\mu}}}{\prod_{i=1}^n X_i} e^{\mu \sum X_i},\notag
+              \end{align}
+              where $\mu = log(\lambda) \in \RR$. Since there exists an open set in the natural parameter space of $\mu$, $T=\sum_{i=1}^n X_i$ is a complete sufficient statistics, which means
+              any estimators based on $T$ is the best unbiased estimator of its expected value.
+              Since $\bar{X} = T/n$ and $\EE(\bar{X}) = \lambda$, we can conclude that $\bar{X}$ is the unique best unbiased estimator of $\lambda$.
+        \item [(b)] It's easy to verify that $\bar{X}$ is also a complete sufficient statistics. Since
+              $S^2$ is an unbiased estimator of $\lambda$, $\phi(\bar{X})=\EE(S^2|\bar{X})$ is also the best
+              unbiased estimator of $\lambda$. However, the best unbiased estimator of $\lambda$ is unique, which means $\EE(S^2|\bar{X}) = \bar{X}$.
+
+              \noindent Since
+              \begin{align}
+                  \VV(S^2) & = \VV(\EE(S^2|\bar{X})) + \EE(\VV(S^2|\bar{X})) \notag \\
+                           & = \VV(\bar{X}) + \EE(\VV(S^2|\bar{X})),\notag
+              \end{align}
+              if $\EE(\VV(S^2|\bar{X})) > 0$, we can prove that $\VV(S^2) > \VV(\bar{X})$. Now
+              let's prove it.
+
+              \noindent If $\EE(\VV(S^2|\bar{X})) = 0$, $\VV(S^2|\bar{X})$ is an unbiased estimator of 0. But
+              $\VV(S^2|\bar{X})$ is a function based on $\bar{X}$, a complete sufficient statistics, which means
+              $\VV(S^2|\bar{X}) = 0$ with probability 1. This implies that given $\bar{X}$, $S^2$ is constant, which is not possible.
+              Thus, we can conclude that $\EE(\VV(S^2|\bar{X})) > 0$.
+
+    \end{itemize}
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        Suppose $X_1, \cdots, X_n\mathop{\sim}\limits^{iid} B(p)$. Find the UMVUE of $p(1-p)$. Make
+        sure to prove that the estimator is indeed a UMVUE of $p(1-p)$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Define $\phi(X)=\II(X_1=1, X_2=0)$, then we have $\EE(\phi(X))=p(1-p)$, which means $\phi(X)$ is an unbiased
+    estimator of $p(1-p)$. Note that $T=\sum_{I=1}^n X_i$ is a complete sufficient statistics. Therefore, $g(T) = \EE(\phi(X)|T)$
+    is also an unbiased estimator of $p(1-p)$, and by Lehmann-Scheff theorem, is the unique best unbiased estimator.
+    And
+    \begin{align}
+        g(t) & =P(X_1=1, X_2=0 | T=t) \notag                                                                  \\
+             & = \frac{P(X_1=1, X_2=0, \sum_{i=3}^n X_i = t-2)}{P(\sum_{i=1}^n X_i = t)} \notag               \\
+             & = \frac{p(1-p) \cdot \binom{n-2}{t-1}p^{t-1}(1-p)^{n-t-1}}{\binom{n}{t}p^{t}(1-p)^{n-t}}\notag \\
+             & =\frac{\binom{n-2}{t-1}}{\binom{n}{t}}.\notag
+    \end{align}
+
+
+
+
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        Prove the following statement:
+
+        \noindent Let $T$ be a complete sufficient statistics for $\theta$ and let $\phi(T)$ be any
+        estimator based on $T$. Then $\phi(T)$ is the unique unbiased estimator of its expected value.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    By Rao-BlackWell, if we want to find the best unbiased estimator, we need only consider unbiased estimators
+    based on $T$. Since $T$ is complete, for any estimators of 0 based on $T$, which satisfies
+    \begin{align}
+        \EE(g(T)) = 0, \notag
+    \end{align}
+    we have $g(T) = 0$ with probability 1. Hence, there is no unbiased estimator of 0 except 0 itself, which
+    means $\phi(T)$ is uncorrelated with all unbiased estimators of 0. Therefore, $\phi(T)$ is the best unbiased
+    estimator of its expected value, and furthermore, it is unique.
+
+
+\end{CJK}
+\end{document}
