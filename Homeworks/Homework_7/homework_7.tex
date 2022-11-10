@@ -44,11 +44,11 @@
     \noindent\textsc{Solution.}\par
     The joint pdf of the sample is
     \begin{align}
-        f(X| \alpha, \lambda) & = \prod_{i=1}^n \frac{\lambda^{\alpha}x_i^{\alpha - 1}e^{-\lambda x_i}}{\Gamma(\alpha)} \notag                                  \\
-                              & = \frac{\lambda^{n\alpha}}{\Gamma(\alpha)^n \prod_{i=1}^n x_i}e^{-\lambda (\sum x_i) + \alpha \,log(\prod_{i=1}^n x_i)}, \notag
+        f(X| \alpha, \lambda) & = \prod_{i=1}^n \frac{\lambda^{\alpha}x_i^{\alpha - 1}e^{-\lambda x_i}}{\Gamma(\alpha)} \notag                            \\
+                              & = \frac{\lambda^{n\alpha}}{\Gamma(\alpha)^n }\left (\prod_{i=1}^n x_i\right )^{\alpha - 1}e^{-\lambda (\sum x_i)}, \notag
     \end{align}
     which means the joint pdf belongs to the exponential family, and has an open set in the natural parameter space.
-    Hence, $T=(\sum x_i, \sum log (x_i))$ is complete sufficient statistics.
+    Hence, $T=\sum x_i$ is complete sufficient statistics.
     Since $\bar{X}/\alpha = g(T)$ and $\EE(g(T)) = 1/\lambda$, by the Lehmann-Scheff Theorem, we can conclude
     that $\bar{X}/\alpha$ is the best unbiased estimator of $1/\lambda$.
 
@@ -66,30 +66,37 @@
         \end{itemize}
     \end{shaded}
     \noindent\textsc{Solution.}\par
-    We have already known that $T=\sum (X_i-\bar{X})^2$ is the complete sufficient statistics of $\sigma^2$ and
-    $T/\sigma^2 \sim \chi^2_{n-1}$.
+    The joint pdf of the sample is
+    \begin{align}
+        f(X|\sigma^2) & = \prod_{i=1}^n \frac{1}{\sqrt{2\pi \sigma^2}} e^{- x_i^2/(2\sigma^2)} \notag \\
+                      & = (2\pi \sigma^2)^{-\frac{n}{2}} e^{-(\sum x_i^2)/(2\sigma^2)} \notag         \\
+                      & = (-\mu \pi)^{-\frac{n}{2}} e^{\mu t}, \notag
+    \end{align}
+    where $t=\sum x_i^2$ and $\mu = -1/(2\sigma^2)\in (-\infty, 0)$. Since the sample distribution belongs to the
+    exponential family and there exists an open set in the natural parameter space, $T=\sum X_i^2$ is the complete
+    sufficient statistics, and $T/\sigma^2\sim \chi^2_{n}$.
     Therefore, we can come up with the UMVUE of $\sigma$ and $\sigma^4$ based on $T$.
     \begin{itemize}
         \item [(a)] Let $T_1 = T/\sigma^2$, then we have
               \begin{align}
-                  \EE(\sqrt{T_1}) & = \int_0^{\infty} \sqrt{t_1} \frac{t_1^{\frac{n-1}{2} - 1}e^{-t_1/2}}{\Gamma \left (\frac{n-1}{2}\right )2^{\frac{n-1}{2}}} d \,t_1 \notag \\
-                                  & = \frac{2\Gamma\left (\frac{n}{2} \right )}{\Gamma\left (\frac{n-1}{2} \right )}.\notag
+                  \EE(\sqrt{T_1}) & = \int_0^{\infty} \sqrt{t_1} \frac{t_1^{\frac{n}{2} - 1}e^{-t_1/2}}{\Gamma \left (\frac{n}{2}\right )2^{\frac{n}{2}}} d \,t_1 \notag \\
+                                  & = \frac{\sqrt{2}\Gamma\left (\frac{n+1}{2} \right )}{\Gamma\left (\frac{n}{2} \right )}.\notag
               \end{align}
               Hence,
               \begin{align}
-                  \EE \left (\frac{\Gamma\left (\frac{n-1}{2} \right ) \sqrt{T} }{2 \Gamma\left (\frac{n}{2} \right )} \right ) = \EE(g_1(T)) =  \sigma.\notag
+                  \EE \left (\frac{\Gamma\left (\frac{n}{2} \right ) \sqrt{T} }{\sqrt{2} \Gamma\left (\frac{n+1}{2} \right )} \right ) = \EE(g_1(T)) =  \sigma.\notag
               \end{align}
               Since $g_1(T)$ is an estimator based only on $T$, and is an unbiased estimator of $\sigma$,
               we know that $g_1(T)$ is the UMVUE of $\sigma$.
         \item [(b)]
               Since
               \begin{align}
-                  \EE (T_1^2) & = \int_0^{\infty} t_1^2 \frac{t_1^{\frac{n-1}{2} - 1}e^{-t_1/2}}{\Gamma \left (\frac{n-1}{2}\right )2^{\frac{n-1}{2}}} d \,t_1 \notag \\
-                              & = \frac{4\Gamma \left (\frac{n-1}{2} + 2 \right )}{\Gamma\left (\frac{n-1}{2} \right )} = (n+1)(n-1), \notag
+                  \EE (T_1^2) & = \int_0^{\infty} t_1^2 \frac{t_1^{\frac{n}{2} - 1}e^{-t_1/2}}{\Gamma \left (\frac{n}{2}\right )2^{\frac{n}{2}}} d \,t_1 \notag \\
+                              & = \frac{4\Gamma \left (\frac{n}{2} + 2 \right )}{\Gamma\left (\frac{n}{2} \right )} = n(n+2), \notag
               \end{align}
               we have
               \begin{align}
-                  \EE \left (\frac{T^2}{(n+1)(n-1)} \right ) = \EE(g_2(T)) = \sigma^4.\notag
+                  \EE \left (\frac{T^2}{n(n+2)} \right ) = \EE(g_2(T)) = \sigma^4.\notag
               \end{align}
               Again, $g_2(T)$ is an estimator only based on $T$, and is an unbiased estimator of $\sigma^4$, thus, is the
               UMVUE of $\sigma^4$.
@@ -188,11 +195,11 @@
     \end{align}
     Suppose $\phi(T)$ is any real value function satisfying $\EE(\phi(T))=0$, then we have
     \begin{align}
-        \int_a^{\infty} \phi(T) n e^{-n(t-a)}\, d \, t = 0.\label{1}
+        \int_a^{\infty} \phi(t) n e^{-n(t-a)}\, d \, t = 0.\label{1}
     \end{align}
     Take derivative with respect to $a$ on both sides of \eqref{1}, then we have
     \begin{align}
-        \phi(a)=0,\, \forall a \in \RR,\notag
+        0 & = n \int_{a}^{\infty} \phi(t) ne^{-(t-a)} - \phi(a) = -\phi(a), \qquad \forall a \in \RR.
     \end{align}
     which means $T$ is also complete.
 
@@ -202,7 +209,8 @@
                & = a + \frac{1}{n},\notag
     \end{align}
     $g(T) = T - \frac{1}{n}$ is an unbiased estimator of $a$, and based only on $T$.
-    Therefore, $g(T)=X_{(1)}-\frac{1}{n}$ is the UMVUE of $a$.
+    Therefore, $X_{(1)}-\frac{1}{n}$ is the UMVUE of $a$.
+
 
 \end{CJK}
 \end{document}
