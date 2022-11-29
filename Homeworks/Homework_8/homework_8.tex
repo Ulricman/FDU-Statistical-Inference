@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{CJKutf8} % 用来支持中文
+\usepackage{caption}
+\usepackage{graphics}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{amsmath} % 用来写数学公式
+\geometry{left=3.2cm, right=3.2cm, top=2.0cm, bottom=2.0cm}
+\usepackage{setspace}
+\setstretch{1.2} 
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\setcounter{secnumdepth}{0} % section不显示编号
+\usepackage{color}
+\definecolor{shadecolor}{rgb}{0.94, 0.94, 1.0}
+\usepackage{framed}
+
+\title{\textbf{Statistical Inference Assignment 8}}
+\author{Junhao Yuan (20307130129)}
+\date{\today}
+
+\begin{document}
+\begin{CJK}{UTF8}{gbsn}
+
+    \maketitle
+    \def \RR{{\mathbb R}}
+    \def \EE{{\mathbb E}}
+    \def \VV{{\mathbb V}}
+    \def \II{{\mathbb I}}
+    \def \NN{{\mathcal N}}
+
+
+    % Problem 1
+    \begin{shaded}
+        \noindent\textsc{Problem 1.}\par
+        Suppose $X_1, \ldots, X_{11}$ are iid $\NN(\mu_1, \sigma^2)$ and $Y_1, \ldots, Y_{21}$ are iid
+        $\NN(\mu_2, \sigma^2)$. Suppose we compute $\bar{X}=1.1$, $S_X^2=1.25$, $\bar{Y}^2=1.9$, $S_Y^2=1.21$. Construct
+        an EXACT $95\%$ confidence interval for $\mu_1-\mu_2$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    We have already known that
+    \begin{align}
+        \sqrt{\frac{mn}{m + n}} \frac{(\bar{X} - \bar{Y}) - (\mu_1 - \mu_2)}{S_{w}} \sim t_{m+n-2},\notag
+    \end{align}
+    where $m=11$, $n=21$ and
+    \begin{align}
+        S_w^2 = \frac{(m-1)S_X^2 + (n-1)S_Y^2}{m+n-2}.\notag
+    \end{align}
+    Therefore, the 95$\%$ confidence interval is
+    \begin{align}
+        \left [ (\bar{X} - \bar{Y}) - \sqrt{\frac{1}{m} + \frac{1}{n}} S_w \,t_{m+n-2}(0.025), \,\,  (\bar{X} - \bar{Y}) - \sqrt{\frac{1}{m}+ \frac{1}{n}} S_w \,t_{m+n-2}(0.025)\right ].\notag
+    \end{align}
+    Then, using the given statistics, we have the confidence interval is
+    \begin{align}
+        \left [  -1.641, 0.041 \right ].\notag
+    \end{align}
+
+
+
+
+
+
+    % Problem 2
+    \begin{shaded}
+        \noindent\textsc{Problem 2.}\par
+        Among 1000 random selected voters 450 say they will vote for candidate A. Could you provide a $95\%$
+        confidence interval for the true supporting rate of candidate A? Does your confidence interval cover 0.5?
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Denote $X_i$ as the event that whether the $i_{th}$ random selected voter support candidate A or not,
+    and $X_i \mathop{\sim}\limits^{iid} B(1, p)$, where $p$ is the probability that the voter support candidate A.
+    We have already known that
+    \begin{align}
+        \frac{\sqrt{n}(\bar{X}-p)}{\sqrt{p(1-p)}} \mathop{\longrightarrow}\limits^{L} \NN(0, 1),\notag
+    \end{align}
+    and
+    \begin{align}
+        \frac{\bar{X}}{p} \mathop{\longrightarrow}\limits^{P} 1.\notag
+    \end{align}
+    Therefore, by the Slutsky Lemma, we have
+    \begin{align}
+        \frac{\sqrt{n}(\bar{X}-p)}{\sqrt{\bar{X}(1-\bar{X})}} \mathop{\longrightarrow}\limits^{L} \NN(0, 1),\notag
+    \end{align}
+    and we can construct the 95$\%$ confidence interval like
+    \begin{align}
+        \left [ \bar{X} - \sqrt{\frac{\bar{X}(1-\bar{X})}{n}}u(0.025), \,\, \bar{X} + \sqrt{\frac{\bar{X}(1-\bar{X})}{n}}u(0.025) \right ].\notag
+    \end{align}
+    And since $\bar{X}=0.45$, we have the 95$\%$ confidence interval is
+    \begin{align}
+        \left [ 0.419, \,\, 0.481  \right ],\notag
+    \end{align}
+    which doesn't cover 0.5.
+
+
+    % Problem 3
+    \begin{shaded}
+        \noindent\textsc{Problem 3.}\par
+        $X_1, \ldots, X_m \mathop{\sim}\limits^{iid}\NN(a, \sigma_1^2)$, $Y_1, \ldots, Y_n\mathop{\sim}\limits^{iid}\NN(b, \sigma_2^2)$.
+        Suppose $\sigma_2^2/\sigma_1^2=\lambda$ and $\lambda$ is known, find a $1-\alpha$ confidence interval for $b-a$.
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    We have already known that
+    \begin{align}
+        \bar{X} \sim \NN\left (a,\, \frac{\sigma_1^2}{m} \right ), \qquad \frac{S_X^2}{\sigma_1^2} \sim \chi^2_{m-1}, \notag
+    \end{align}
+    and
+    \begin{align}
+        \bar{Y} \sim \NN\left (b,\, \frac{\sigma_2^2}{n} \right ), \qquad \frac{S_Y^2}{\sigma_2^2} \sim \chi^2_{n-1}, \notag
+    \end{align}
+    where
+    \begin{align}
+        S_X^2 = \frac{\sum_{i=1}^m (X_i-\bar{X})^2}{m-1}, \qquad S_Y^2 =\frac{\sum_{j=1}(Y_j-\bar{Y})^2}{n-1}.\notag
+    \end{align}
+    Therefore,
+    \begin{align}
+        \frac{\left [ (\bar{Y}-\bar{X}) - (b-a) \right ] / \sqrt{\frac{\sigma_1^2}{m} + \frac{\sigma_2^2}{n}}}{\sqrt{\left ( \frac{(m-1)S_X^2}{\sigma_1^2} + \frac{(n-1)S_Y^2}{\sigma_2^2} \right ) / (m+n-2)}} =
+        \sqrt{\frac{m+n-2}{1/m+\lambda /n}} \frac{(\bar{Y}-\bar{X}) - (b-a)}{\sqrt{(m-1)S_X^2 + (n-1)S_Y^2/\lambda}} \sim t_{m+n-2},\notag
+    \end{align}
+    and a $1-\alpha$ confidence interval for $b-a$ is
+    \begin{align}
+        \left [ (\bar{Y} - \bar{X}) \pm \sqrt{(m-1)S_X^2 + \frac{(n-1)S_Y^2}{\lambda}}\sqrt{\frac{\frac{1}{m}+\frac{\lambda}{n}}{m+n-2}} t_{m+n-2}\left (\frac{\alpha}{2}\right )\right ].\notag
+    \end{align}
+
+
+
+
+
+
+    % Problem 4
+    \begin{shaded}
+        \noindent\textsc{Problem 4.}\par
+        Suppose $X_1, \ldots, X_n$ are iid $\NN(\mu, 16)$, if we want to construct a $1-\alpha$ level
+        confidence interval for $\mu$ with length less than $L$. How large must $n$ be?
+    \end{shaded}
+    \noindent\textsc{Solution.}\par
+    Since $\bar{X} \sim \NN(\mu, \frac{16}{n})$, the shortest $1-\alpha$ confidence interval for $\mu$ is
+    \begin{align}
+        \left [ \bar{X} - \frac{4 u(\alpha / 2)}{\sqrt{n}}, \qquad \bar{X}  + \frac{4 u(\alpha / 2)}{\sqrt{n}}\right ], \notag
+    \end{align}
+    and the length is $8u(\alpha / 2) / \sqrt{n}$.
+    To make $8u(\alpha / 2) / \sqrt{n}$ less than $L$, we must have
+    \begin{align}
+        n > \frac{64 u^2(\alpha / 2)}{L^2}, \notag
+    \end{align}
+    which means
+    \begin{align}
+        n \geq \left [\frac{64 u^2(\alpha / 2)}{L^2} \right ] + 1, \notag
+    \end{align}
+    where $\left [C \right ]$ denotes the integer part of $C$.
+
+\end{CJK}
+\end{document}
